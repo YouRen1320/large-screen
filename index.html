@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>病房床位状态可视化看板</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <!-- 头部的盒子 -->
+    <header>
+        <div class="header-left">
+            <div class="location">
+                <img src="./svg/定位.svg" alt="定位" class="header-svg" />
+                <span id="header-positing">住院部</span>
+            </div>
+            <div class="weather">
+                <img src="./svg/多云.svg" alt="多云" class="header-svg" />
+                <span id="header-weather">多云</span>
+            </div>
+            <span id="header-temperature">24℃</span>
+        </div>
+
+        <div class="header-center">
+            <h1>病房床位状态可视化看板</h1>
+        </div>
+
+        <div class="header-right">
+            <span id="date"></span>
+            <span id="week"></span>
+            <span id="hours"></span>
+        </div>
+    </header>
+
+    <script src="./js/index.js"></script>
+</body>
+
+</html>

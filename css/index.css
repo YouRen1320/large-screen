@@ -1,0 +1,81 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0b0f34; /* Deep blue background for data visualization */
+  color: #fff;
+  font-family: "Arial", sans-serif;
+  overflow: hidden; /* Prevent scrolling for full screen dashboard */
+}
+
+/* Header Styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  background: url("../images/head_bg.png") no-repeat center center; /* Placeholder for header background */
+  background-size: 100% 100%;
+  padding: 0 20px;
+  position: relative;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+}
+
+.header-left .location,
+.header-left .weather {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 18px;
+  color: #4c9bfd;
+}
+
+.header-svg {
+  width: 24px;
+  height: 24px;
+  /* In a real project, you might want to filter these to match the theme color if they aren't already */
+}
+
+#header-temperature {
+  font-size: 18px;
+  color: #4c9bfd;
+  font-weight: bold;
+}
+
+.header-center {
+  flex: 2;
+  text-align: center;
+}
+
+.header-center h1 {
+  font-size: 32px;
+  color: #fff;
+  text-shadow: 0 0 10px #00eaff;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.header-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+  font-size: 18px;
+  color: #4c9bfd;
+}
+
+#hours {
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+}
