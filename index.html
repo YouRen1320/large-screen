@@ -1,40 +1,213 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>病房床位状态可视化看板</title>
-    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./index.css">
 </head>
 
 <body>
-    <!-- 头部的盒子 -->
-    <header>
+    <!-- 标题区域 -->
+    <header class="dashboard-header">
+        <!-- 医院名称 -->
         <div class="header-left">
-            <div class="location">
-                <img src="./svg/定位.svg" alt="定位" class="header-svg" />
-                <span id="header-positing">住院部</span>
+            <div class="hospital-logo">
+                <span class="logo-icon">🏥</span>
+                <span class="hospital-name">河南省人民医院</span>
             </div>
-            <div class="weather">
-                <img src="./svg/多云.svg" alt="多云" class="header-svg" />
-                <span id="header-weather">多云</span>
-            </div>
-            <span id="header-temperature">24℃</span>
         </div>
-
+        <!-- 标题 -->
         <div class="header-center">
-            <h1>病房床位状态可视化看板</h1>
+            <h1 class="main-title">病房床位状态可视化看板</h1>
         </div>
-
+        <!-- 日期、天气 -->
         <div class="header-right">
-            <span id="date"></span>
-            <span id="week"></span>
-            <span id="hours"></span>
+            <div class="weather-info">
+                <span class="weather-icon">☀️</span>
+                <span id="weather-temp">24°C</span>
+                <span id="weather-desc">晴</span>
+            </div>
+            <div class="weather-info" style="margin-left: 30px;">
+                <div id="current-date">2025年11月23日</div>
+                <div id="current-week" style="margin: 0 15px;">星期三</div>
+                <div id="current-time">23:41:50</div>
+            </div>
         </div>
     </header>
 
-    <script src="./js/index.js"></script>
+    <!-- 主体内容 -->
+    <main class="dashboard-main">
+        <!-- 左侧面板 -->
+        <aside class="left-panel">
+            <!-- 模块1: 床位占用排行榜 -->
+            <section class="panel-module">
+                <div class="module-header">
+                    <h3 class="module-title">床位占用排行榜</h3>
+                    <div class="title-decoration"></div>
+                </div>
+                <div class="module-content">
+                    <table class="ranking-table" id="ranking-table">
+                        <thead>
+                            <tr>
+                                <th>排名</th>
+                                <th>病区</th>
+                                <th>床位数</th>
+                                <th>占用率</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- JS动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 模块2: 床位趋势折线图 -->
+            <section class="panel-module">
+                <div class="module-header">
+                    <h3 class="module-title">近7日床位趋势</h3>
+                    <div class="title-decoration"></div>
+                </div>
+                <div class="module-content">
+                    <div id="trend-chart" class="chart-container"></div>
+                </div>
+            </section>
+
+            <!-- 模块3: 患者来源分布 -->
+            <section class="panel-module">
+                <div class="module-header">
+                    <h3 class="module-title">患者来源分布</h3>
+                    <div class="title-decoration"></div>
+                </div>
+                <div class="module-content">
+                    <div id="source-chart" class="chart-container"></div>
+                </div>
+            </section>
+        </aside>
+
+        <!-- 中间主视图 -->
+        <section class="center-view">
+            <div class="view-header">
+                <h2 class="view-title">病房床位实时监控</h2>
+                <div class="status-legend">
+                    <span class="legend-item">
+                        <i class="status-dot free"></i>
+                        <span>空闲</span>
+                    </span>
+                    <span class="legend-item">
+                        <i class="status-dot occupied"></i>
+                        <span>占用</span>
+                    </span>
+                    <span class="legend-item">
+                        <i class="status-dot cleaning"></i>
+                        <span>待消毒</span>
+                    </span>
+                </div>
+            </div>
+            <div class="beds-container">
+                <!-- 装饰背景 -->
+                <div class="bg-decoration"></div>
+                <!-- 床位网格 -->
+                <div id="beds-grid" class="beds-grid">
+                    <!-- JS动态生成 30个床位 (6x5) -->
+                </div>
+            </div>
+            <div class="view-footer">
+                <div class="footer-stat">
+                    <span class="stat-label">总床位:</span>
+                    <span class="stat-value" id="total-beds">30</span>
+                </div>
+                <div class="footer-stat">
+                    <span class="stat-label">在院人数:</span>
+                    <span class="stat-value" id="occupied-count">0</span>
+                </div>
+                <div class="footer-stat">
+                    <span class="stat-label">空闲床位:</span>
+                    <span class="stat-value" id="free-count">0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 右侧面板 -->
+        <aside class="right-panel">
+            <!-- 模块1: 医院信息栏 -->
+            <section class="panel-module">
+                <div class="module-header">
+                    <h3 class="module-title">实时统计</h3>
+                    <div class="title-decoration"></div>
+                </div>
+                <div class="module-content quick-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <div class="stat-number" id="today-admission">0</div>
+                            <div class="stat-text">今日入院</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🚪</div>
+                        <div class="stat-info">
+                            <div class="stat-number" id="today-discharge">0</div>
+                            <div class="stat-text">今日出院</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 模块2: 值班医护列表 -->
+            <section class="panel-module">
+                <div class="module-header">
+                    <h3 class="module-title">值班医护人员</h3>
+                    <div class="title-decoration"></div>
+                </div>
+                <div class="module-content">
+                    <!-- 列表 -->
+                    <div id="staff-list" class="staff-list">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 模块3: 床位状态饼图 -->
+            <section class="panel-module">
+                <div class="module-header">
+                    <h3 class="module-title">床位状态占比</h3>
+                    <div class="title-decoration"></div>
+                </div>
+                <div class="module-content">
+                    <div id="status-pie-chart" class="chart-container"></div>
+                </div>
+            </section>
+
+            <!-- 模块4: 科室统计表 -->
+            <section class="panel-module">
+                <div class="module-header">
+                    <h3 class="module-title">科室统计数据</h3>
+                    <div class="title-decoration"></div>
+                </div>
+                <div class="module-content">
+                    <table class="dept-table" id="dept-table">
+                        <thead>
+                            <tr>
+                                <th>科室</th>
+                                <th>床位</th>
+                                <th>周转率</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- JS动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </aside>
+    </main>
+
+    <!-- 引入 ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <!-- 引入js -->
+    <script src="./index.js"></script>
 </body>
 
 </html>

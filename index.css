@@ -1,0 +1,772 @@
+/* ==================== 全局样式 ==================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Microsoft YaHei", "Arial", sans-serif;
+  background: #0a0e27;
+  color: #ffffff;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==================== 头部样式 ==================== */
+.dashboard-header {
+  height: 80px;
+  background: linear-gradient(180deg, #0f1629 0%, #0a0e27 100%);
+  border-bottom: 2px solid #1e3a5f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  position: relative;
+  z-index: 100;
+}
+
+.header-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.hospital-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  font-size: 36px;
+}
+
+.hospital-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #00d4ff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.header-center {
+  flex: 2;
+  text-align: center;
+}
+
+.main-title {
+  font-size: 32px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #00d4ff, #00ffaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  letter-spacing: 3px;
+}
+
+.header-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 30px;
+}
+
+.weather-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: #b0c4de;
+}
+
+.weather-icon {
+  font-size: 24px;
+}
+
+.datetime-info {
+  text-align: right;
+  font-size: 14px;
+  color: #b0c4de;
+  line-height: 1.5;
+}
+
+#current-date {
+  font-size: 15px;
+  color: #00d4ff;
+}
+
+#current-time {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  font-family: "Consolas", monospace;
+}
+
+/* ==================== 主体布局 ==================== */
+.dashboard-main {
+  flex: 1;
+  display: flex;
+  gap: 15px;
+  padding: 15px;
+  overflow: hidden;
+}
+
+/* ==================== 左侧面板 ==================== */
+.left-panel {
+  flex: 0 0 25%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow: hidden;
+}
+
+.left-panel .panel-module {
+  flex: 1;
+}
+
+/* ==================== 中间视图 ==================== */
+.center-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: rgba(15, 22, 41, 0.6);
+  border: 1px solid #1e3a5f;
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.05) inset;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ==================== 右侧面板 ==================== */
+.right-panel {
+  flex: 0 0 25%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow: hidden;
+}
+
+.right-panel .panel-module {
+  min-height: 0; /* Ensure flex items can shrink below content size if needed */
+  display: flex;
+  flex-direction: column;
+}
+
+/* 右侧模块特定高度分配 */
+.right-panel .panel-module:nth-child(1) {
+  flex: 0 0 auto; /* 实时统计 - 固定高度 */
+}
+
+.right-panel .panel-module:nth-child(2) {
+  flex: 1.5; /* 值班医护人员 - 较大空间 */
+}
+
+.right-panel .panel-module:nth-child(3) {
+  flex: 1.2; /* 床位状态占比 */
+}
+
+.right-panel .panel-module:nth-child(4) {
+  flex: 0.8; /* 科室统计数据 */
+}
+
+/* ==================== 通用模块样式 ==================== */
+.panel-module {
+  display: flex;
+  flex-direction: column;
+  background: rgba(15, 22, 41, 0.8);
+  border: 1px solid #1e3a5f;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  min-height: 0; /* 关键：允许flex子项收缩 */
+}
+
+.module-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+  position: relative;
+}
+
+.module-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #00d4ff;
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+  position: relative;
+  padding-left: 12px;
+}
+
+.module-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 18px;
+  background: linear-gradient(180deg, #00d4ff, #0088ff);
+  border-radius: 2px;
+}
+
+.title-decoration {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, #00d4ff 0%, transparent 100%);
+}
+
+.module-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  color: #b0c4de;
+  font-size: 14px;
+  min-height: 0; /* 关键：允许内容区域收缩 */
+  overflow: hidden;
+}
+
+/* ==================== 排行榜样式 ==================== */
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ranking-table th {
+  background: rgba(0, 212, 255, 0.1);
+  color: #00d4ff;
+  padding: 10px 8px;
+  font-size: 13px;
+  font-weight: bold;
+  border-bottom: 1px solid #1e3a5f;
+}
+
+.ranking-table td {
+  padding: 12px 8px;
+  border-bottom: 1px solid rgba(30, 58, 95, 0.5);
+  text-align: center;
+}
+
+.ranking-table tbody tr:hover {
+  background: rgba(0, 212, 255, 0.05);
+}
+
+.rank-number {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 50%;
+  font-weight: bold;
+  background: #1e3a5f;
+  color: #fff;
+}
+
+.rank-number.top {
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  color: #000;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00d4ff, #00ffaa);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* ==================== 图表容器 ==================== */
+.chart-container {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 0; /* 移除固定高度，允许自适应收缩 */
+}
+
+/* ==================== 中间视图头部 ==================== */
+.view-header {
+  padding: 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 212, 255, 0.1) 0%,
+    transparent 100%
+  );
+  border-bottom: 1px solid #1e3a5f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #00d4ff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.status-legend {
+  display: flex;
+  gap: 20px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #b0c4de;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.free {
+  background: #00d4ff;
+  box-shadow: 0 0 8px #00d4ff;
+  animation: pulse-blue 2s infinite;
+}
+
+.status-dot.occupied {
+  background: #ff4757;
+  box-shadow: 0 0 8px #ff4757;
+  animation: pulse-red 2s infinite;
+}
+
+.status-dot.cleaning {
+  background: #ffa502;
+  box-shadow: 0 0 8px #ffa502;
+  animation: pulse-orange 2s infinite;
+}
+
+@keyframes pulse-blue {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(0, 212, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 212, 255, 0);
+  }
+}
+
+@keyframes pulse-red {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(255, 71, 87, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 71, 87, 0);
+  }
+}
+
+@keyframes pulse-orange {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 165, 2, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(255, 165, 2, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 165, 2, 0);
+  }
+}
+
+/* ==================== 床位容器 ==================== */
+.beds-container {
+  flex: 1;
+  position: relative;
+  padding: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 50px,
+      rgba(0, 212, 255, 0.03) 50px,
+      rgba(0, 212, 255, 0.03) 51px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 50px,
+      rgba(0, 212, 255, 0.03) 50px,
+      rgba(0, 212, 255, 0.03) 51px
+    );
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ==================== 床位网格 ==================== */
+.beds-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 15px; /* 减小间距 */
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  padding: 10px; /* 添加内边距 */
+}
+
+/* ==================== 床位卡片 ==================== */
+.bed-card {
+  background: rgba(15, 22, 41, 0.6);
+  border: 1px solid rgba(30, 58, 95, 0.8);
+  border-radius: 6px;
+  padding: 0.8vw;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4vw;
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+
+.bed-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: transparent;
+  transition: all 0.3s ease;
+  /* Reduced shadow intensity */
+  box-shadow: 0 0 5px currentColor;
+}
+
+.bed-card:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.bed-card.free {
+  border-color: rgba(0, 212, 255, 0.5);
+  background: rgba(0, 212, 255, 0.05);
+}
+
+.bed-card.free::before {
+  background: #00d4ff;
+  box-shadow: 0 0 5px #00d4ff;
+}
+
+.bed-card.free:hover {
+  border-color: #00d4ff;
+  background: rgba(0, 212, 255, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.bed-card.occupied {
+  border-color: rgba(255, 71, 87, 0.5);
+  background: rgba(255, 71, 87, 0.05);
+}
+
+.bed-card.occupied::before {
+  background: #ff4757;
+  box-shadow: 0 0 5px #ff4757;
+}
+
+.bed-card.occupied:hover {
+  border-color: #ff4757;
+  background: rgba(255, 71, 87, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.bed-card.cleaning {
+  border-color: rgba(255, 165, 2, 0.5);
+  background: rgba(255, 165, 2, 0.05);
+}
+
+.bed-card.cleaning::before {
+  background: #ffa502;
+  box-shadow: 0 0 5px #ffa502;
+}
+
+.bed-card.cleaning:hover {
+  border-color: #ffa502;
+  background: rgba(255, 165, 2, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.bed-icon {
+  width: 2.5vw;
+  height: 2.5vw;
+  margin-bottom: 0.3vw;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+}
+
+.bed-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.bed-number {
+  font-size: 1.2vw;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.bed-patient-name {
+  font-size: 0.9vw;
+  color: #b0c4de;
+  margin-top: 0.3vw;
+}
+
+.bed-status-text {
+  font-size: 0.8vw;
+  padding: 0.2vw 0.6vw;
+  border-radius: 4px;
+  margin-top: 0.3vw;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.bed-card.free .bed-status-text {
+  background: rgba(0, 212, 255, 0.1);
+  color: #00d4ff;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.bed-card.occupied .bed-status-text {
+  background: rgba(255, 71, 87, 0.1);
+  color: #ff4757;
+  border: 1px solid rgba(255, 71, 87, 0.2);
+}
+
+.bed-card.cleaning .bed-status-text {
+  background: rgba(255, 165, 2, 0.1);
+  color: #ffa502;
+  border: 1px solid rgba(255, 165, 2, 0.2);
+}
+
+/* ==================== 中间视图底部 ==================== */
+.view-footer {
+  padding: 15px 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid #1e3a5f;
+  display: flex;
+  justify-content: space-around;
+  gap: 30px;
+}
+
+.footer-stat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.stat-label {
+  color: #b0c4de;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #00d4ff;
+  font-family: "Consolas", monospace;
+}
+
+/* ==================== 右侧快捷统计 ==================== */
+.quick-stats {
+  display: flex;
+  gap: 10px;
+}
+
+.stat-card {
+  flex: 1;
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 6px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stat-icon {
+  font-size: 32px;
+}
+
+.stat-info {
+  flex: 1;
+}
+
+.stat-number {
+  font-size: 24px;
+  font-weight: bold;
+  color: #00d4ff;
+  font-family: "Consolas", monospace;
+}
+
+.stat-text {
+  font-size: 13px;
+  color: #b0c4de;
+  margin-top: 2px;
+}
+
+/* ==================== 值班人员列表 ==================== */
+.staff-list {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0; /* 允许滚动 */
+}
+
+.staff-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-bottom: 1px solid rgba(30, 58, 95, 0.3);
+  transition: background 0.2s;
+}
+
+.staff-item:hover {
+  background: rgba(0, 212, 255, 0.05);
+}
+
+.staff-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.staff-info {
+  flex: 1;
+}
+
+.staff-name {
+  font-size: 15px;
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.staff-role {
+  font-size: 12px;
+  color: #00d4ff;
+}
+
+.staff-dept {
+  font-size: 12px;
+  color: #888;
+}
+
+/* ==================== 科室统计表 ==================== */
+.dept-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dept-table th {
+  background: rgba(0, 212, 255, 0.1);
+  color: #00d4ff;
+  padding: 10px 8px;
+  font-size: 13px;
+  font-weight: bold;
+  border-bottom: 1px solid #1e3a5f;
+}
+
+.dept-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(30, 58, 95, 0.3);
+  text-align: center;
+  font-size: 13px;
+}
+
+.dept-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.dept-table tbody tr:hover {
+  background: rgba(0, 212, 255, 0.05);
+}
+
+/* ==================== 滚动条样式 ==================== */
+.left-panel::-webkit-scrollbar,
+.right-panel::-webkit-scrollbar,
+.staff-list::-webkit-scrollbar,
+.beds-container::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.left-panel::-webkit-scrollbar-thumb,
+.right-panel::-webkit-scrollbar-thumb,
+.staff-list::-webkit-scrollbar-thumb,
+.beds-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 255, 0.3);
+  border-radius: 3px;
+}
+
+.left-panel::-webkit-scrollbar-track,
+.right-panel::-webkit-scrollbar-track,
+.staff-list::-webkit-scrollbar-track,
+.beds-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* ==================== 响应式适配 ==================== */
+@media (max-width: 1600px) {
+  .beds-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 1200px) {
+  .main-title {
+    font-size: 24px;
+  }
+
+  .beds-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
