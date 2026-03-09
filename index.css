@@ -6,13 +6,29 @@
 }
 
 body {
-  font-family: "Microsoft YaHei", "Arial", sans-serif;
+  font-family: 'Microsoft YaHei', 'Arial', sans-serif;
   background: #0a0e27;
   color: #ffffff;
   overflow: hidden;
   height: 100vh;
+  width: 100vw;
+  margin: 0;
+}
+
+/* ==================== 大屏等比缩放容器 ==================== */
+#app {
+  width: 1920px;
+  height: 1080px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
   display: flex;
   flex-direction: column;
+  background: #0a0e27;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
 }
 
 /* ==================== 头部样式 ==================== */
@@ -62,7 +78,7 @@ body {
   background: linear-gradient(90deg, #00d4ff, #00ffaa);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
   letter-spacing: 3px;
 }
 
@@ -80,6 +96,7 @@ body {
   gap: 8px;
   font-size: 16px;
   color: #b0c4de;
+  white-space: nowrap;
 }
 
 .weather-icon {
@@ -102,7 +119,7 @@ body {
   font-size: 20px;
   font-weight: bold;
   color: #ffffff;
-  font-family: "Consolas", monospace;
+  font-family: 'Consolas', monospace;
 }
 
 /* ==================== 主体布局 ==================== */
@@ -161,15 +178,15 @@ body {
 }
 
 .right-panel .panel-module:nth-child(2) {
-  flex: 1.5; /* 值班医护人员 - 较大空间 */
+  flex: 1.3; /* 值班医护人员 */
 }
 
 .right-panel .panel-module:nth-child(3) {
-  flex: 1.2; /* 床位状态占比 */
+  flex: 1; /* 床位状态占比 */
 }
 
 .right-panel .panel-module:nth-child(4) {
-  flex: 0.8; /* 科室统计数据 */
+  flex: 1.2; /* 科室统计数据 - 增加高度防止表格被吞 */
 }
 
 /* ==================== 通用模块样式 ==================== */
@@ -205,7 +222,7 @@ body {
 }
 
 .module-title::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 50%;
@@ -230,6 +247,10 @@ body {
   font-size: 14px;
   min-height: 0; /* 关键：允许内容区域收缩 */
   overflow: hidden;
+}
+
+.right-panel .panel-module:nth-child(4) .module-content {
+  overflow-y: auto; /* 对于表格模块，允许内容溢出滚动，防止截断 */
 }
 
 /* ==================== 排行榜样式 ==================== */
@@ -300,7 +321,7 @@ body {
 
 /* ==================== 中间视图头部 ==================== */
 .view-header {
-  padding: 15px 20px; 
+  padding: 15px 20px;
   background: linear-gradient(
     180deg,
     rgba(0, 212, 255, 0.1) 0%,
@@ -398,7 +419,7 @@ body {
 .beds-container {
   flex: 1;
   position: relative;
-  padding: 8px 15px; 
+  padding: 8px 15px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -412,7 +433,8 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: repeating-linear-gradient(
+  background-image:
+    repeating-linear-gradient(
       0deg,
       transparent,
       transparent 50px,
@@ -434,7 +456,7 @@ body {
 .beds-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(5, 1fr);
+  grid-auto-rows: 1fr;
   gap: 6px; /* 减小gap给床位更多空间 */
   width: 100%;
   height: 100%;
@@ -456,14 +478,14 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.15vw;
-  width: 100%; 
-  height: 100%; 
+  width: 100%;
+  height: 100%;
   position: relative;
   backdrop-filter: blur(4px);
 }
 
 .bed-card::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -530,11 +552,11 @@ body {
 }
 
 .bed-icon {
-  width: 1.5vw; 
+  width: 1.5vw;
   height: 1.5vw;
   margin-bottom: 0;
   filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.3));
-  flex-shrink: 0; 
+  flex-shrink: 0;
 }
 
 .bed-icon svg {
@@ -544,35 +566,23 @@ body {
 }
 
 .bed-number {
-  font-size: 0.85vw; 
+  font-size: 0.85vw;
   font-weight: bold;
   color: #ffffff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  flex-shrink: 0; 
-  line-height: 1.2;
-}
-
-.bed-patient-name {
-  font-size: 0.65vw; 
-  color: #b0c4de;
-  margin-top: 0;
   flex-shrink: 0;
-  white-space: nowrap; 
-  overflow: hidden;
-  text-overflow: ellipsis; 
-  max-width: 100%; 
   line-height: 1.2;
 }
 
 .bed-status-text {
-  font-size: 0.6vw; 
-  padding: 0.1vw 0.3vw; 
+  font-size: 0.6vw;
+  padding: 0.1vw 0.3vw;
   border-radius: 2px;
   margin-top: 0;
   font-weight: bold;
   letter-spacing: 0.3px;
-  flex-shrink: 0; 
-  white-space: nowrap; 
+  flex-shrink: 0;
+  white-space: nowrap;
   line-height: 1.3;
 }
 
@@ -620,7 +630,7 @@ body {
   font-size: 22px;
   font-weight: bold;
   color: #00d4ff;
-  font-family: "Consolas", monospace;
+  font-family: 'Consolas', monospace;
 }
 
 /* ==================== 右侧快捷统计 ==================== */
@@ -652,7 +662,7 @@ body {
   font-size: 24px;
   font-weight: bold;
   color: #00d4ff;
-  font-family: "Consolas", monospace;
+  font-family: 'Consolas', monospace;
 }
 
 .stat-text {
@@ -768,21 +778,4 @@ body {
 .staff-list::-webkit-scrollbar-track,
 .beds-container::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.2);
-}
-
-/* ==================== 响应式适配 ==================== */
-@media (max-width: 1600px) {
-  .beds-grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
-}
-
-@media (max-width: 1200px) {
-  .main-title {
-    font-size: 24px;
-  }
-
-  .beds-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
 }
